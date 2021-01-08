@@ -1,0 +1,540 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled5.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyNuzM9PuD1R4V0VyBTqqUWH",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/nurfnick/Numerical_Methods/blob/master/WeBWorK1HomeworkHelper\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "YLTk19MLjCqj"
+      },
+      "source": [
+        "# Homework Helper Module 1"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ieEERiqZjIMs"
+      },
+      "source": [
+        "I am going to try to create a series of homework helpers to make WeBWorK as easy as possible.  I really want to stress how important it is to utilize technology so I will do most of this directly in python.  I do not intend for this document to be self contained, please use the text and videos to understand the material and this document to see an extra example.  Okay, let's try one!\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "G1vnaWfejqah"
+      },
+      "source": [
+        "## WeBWorK 1\n",
+        "\n",
+        "Find the Taylor polynomial of degree 4 for $\\cos(x)$, for x near 0: "
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "jSFF0YeykjIk"
+      },
+      "source": [
+        "The Taylor polynomial for $\\cos(x)$ at 0 is\n",
+        "\n",
+        "$$\n",
+        "\\cos(x)=\\sum_{n=0}^\\infty \\left(-1\\right)^n\\frac{x^{2n}}{(2n)!}\n",
+        "$$"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "B0mlRCSKjBaf"
+      },
+      "source": [
+        "import math\n",
+        "\n",
+        "def macCos(x,n):\n",
+        "  sum = 0\n",
+        "  for i in range(n):\n",
+        "    sum = sum + (-1)**i * x**(2*i)/math.factorial(2*i)\n",
+        "  return sum"
+      ],
+      "execution_count": 15,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "LnX5LpRale-m",
+        "outputId": "8dca2502-4dbb-488c-f4ca-a18123f87ccb"
+      },
+      "source": [
+        "macCos(0,3)"
+      ],
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "1.0"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 17
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "bM2ShUL7moQ_"
+      },
+      "source": [
+        "Unfortunately this will not give me a symbolic representation with an $x$ in there so I cannot do any better than just evaluate at a value (this is what computers are great at!)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ckAnUlX-n9Dj"
+      },
+      "source": [
+        "# WeBWorK 2\n",
+        "\n",
+        "Taylor and MacLaurin Series: Consider the approximation of the exponential by its third degree Taylor Polynomial:\n",
+        "$$e^x \\approx P_3(x) = 1+ x + \\frac{x^2}{2} + \\frac{x^3}{6}$$.\n",
+        "Compute the error $e^x-P_3(x)$ for various values of x: "
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "39UIC2sHln4x"
+      },
+      "source": [
+        "def macE(x,n):\n",
+        "  sum = 0\n",
+        "  for i in range(n+1): #if you want a third degree you need to input 3.\n",
+        "    sum = sum + x**i/math.factorial(i)\n",
+        "  return sum"
+      ],
+      "execution_count": 30,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ajeGoKpun6ZL",
+        "outputId": "84f478dc-9ba5-4e35-a0f0-94a7073c6295"
+      },
+      "source": [
+        "macE(2,3)"
+      ],
+      "execution_count": 31,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "6.333333333333333"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 31
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DtZsdl-DoizK",
+        "outputId": "1c90a4ce-6651-4821-ab13-1dd010b64e31"
+      },
+      "source": [
+        "math.e**2-macE(2,3)"
+      ],
+      "execution_count": 32,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "1.0557227655973165"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 32
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "uBxa7VVzpvXJ"
+      },
+      "source": [
+        "So you may have to do a few of these but this is the idea!"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "d6S-EH1Np1Ep"
+      },
+      "source": [
+        "# WeBWorK 6\n",
+        "\n",
+        "The circumference of a sphere was measured to be 82.000 cm with a possible error of 0.50000 cm. Use linear approximation to estimate the maximum error in the calculated surface area. "
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "R9Ds5OVhqGPH"
+      },
+      "source": [
+        "So we have a sphere, the surface area is the derivative of the volume with respect to the radius.  $V=\\frac43 \\pi r^3$\n",
+        "\n",
+        "$$\n",
+        "\\frac{\\partial V}{\\partial r} = SA = 4\\pi r^2\n",
+        "$$\n",
+        "\n",
+        "Then the Error in the surface area can be linearly approximated as\n",
+        "\n",
+        "$$\n",
+        "\\Delta SA \\approx \\partial SA = 8\\pi r \\Delta r \n",
+        "$$"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "jgpyiRh0rXHZ"
+      },
+      "source": [
+        "But I don't have the radius yet!  Circumference of a circle (and sphere) is $c=2\\pi r$ so $\\Delta C = 2\\pi \\Delta r$ ie\n",
+        "\n",
+        "$$\n",
+        "\\Delta r = \\frac{\\Delta C}{2\\pi}\n",
+        "$$"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "08XpMQKEo2Iq",
+        "outputId": "58b17fc1-abd4-49d1-d708-15b023be2a48"
+      },
+      "source": [
+        "8*math.pi*82/(2*math.pi)*.5/(2*math.pi)"
+      ],
+      "execution_count": 33,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "26.101410667070837"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 33
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "vy1EmhKNshB1"
+      },
+      "source": [
+        "The surface area can be computed as \n",
+        "$$\n",
+        "SA = \\frac{C^2}\\pi\n",
+        "$$\n",
+        "\n",
+        "The relative error is just divided by this number"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "0O1ftTijsgxf",
+        "outputId": "5f750a83-035d-4c9b-ad7d-4fba8ddc2205"
+      },
+      "source": [
+        "(8*math.pi*82/(2*math.pi)*.5/(2*math.pi))/(82**2/math.pi)"
+      ],
+      "execution_count": 36,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "0.012195121951219514"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 36
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "5osTtfwFuYF3"
+      },
+      "source": [
+        "# WeBWorK 7\n",
+        "\n",
+        "Use linear approximation, i.e. the tangent line, to approximate $\\frac 1{0.203}$ as follows: Let $f(x) = \\frac 1x$ and find the equation of the tangent line to f(x) at a \"nice\" point near 0.203. Then use this to approximate $\\frac 1{0.203}$. "
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "V7NFx6qGugci"
+      },
+      "source": [
+        "Okay so the nice point is $0.2=\\frac15$  and the linear approximation is\n",
+        "\n",
+        "$$\n",
+        "f(x+\\Delta x)-f(x) \\approx f'(x)\\Delta x\n",
+        "$$\n",
+        "\n",
+        "Since $f(x) = \\frac1x$ so $f'(x) = -\\frac1{x^2}$ and $f'(x) = -25$"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "vAfxDtZysalS",
+        "outputId": "ffb05b78-2fd1-479d-ed90-5caf7dc7c8d3"
+      },
+      "source": [
+        "5+-25*.003"
+      ],
+      "execution_count": 37,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "4.925"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 37
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "pgFnXgH9vW1o",
+        "outputId": "fdc412cc-00f2-4ecb-ead2-a70279ab4868"
+      },
+      "source": [
+        "1/0.203"
+      ],
+      "execution_count": 38,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "4.926108374384236"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 38
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "rWq-frcFwNaT"
+      },
+      "source": [
+        "# WeBWorK 11\n",
+        "\n",
+        "Use series to approximate the definite integral to within the indicated accuracy:\n",
+        "$$\\int_0^{0.4} e^{-x^3}\\,dx, \\textrm{ with an error } < 10^{-4}$$\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "p44saii6wVm3"
+      },
+      "source": [
+        "Let's start with the indefinate integral and convert it to series.\n",
+        "\n",
+        "$$e^{-x^3}=\\sum\\frac{(-1)^n x^{3n}}{n!}$$\n",
+        "so\n",
+        "$$\\int e^{-x^3}dx=\\int\\sum\\frac{(-1)^n x^{3n}}{n!} dx=\\sum \\frac{(-1)^n}{n!}\\int x^{3n}dx\n",
+        "= \\sum \\frac{(-1)^n}{n!} \\frac{x^{3n+1}}{3n+1}\n",
+        " $$\n",
+        "\n",
+        "The error in the $n$th term is bounded by the $n+1$ term in absolute value, so I'll drop the $(-1)^n$"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "W_Vgqw9SvaZ0"
+      },
+      "source": [
+        "def term(x,n):\n",
+        "  return x**(3*n+1)/(math.factorial(n)*(3*n+1))"
+      ],
+      "execution_count": 39,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ABrFxmNEyhTH",
+        "outputId": "295652a3-29ef-40b4-e28c-34020d44b471"
+      },
+      "source": [
+        "for i in range(10):\n",
+        "  if term(.4,i)< 0.0001:\n",
+        "    print(i)"
+      ],
+      "execution_count": 40,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "3\n",
+            "4\n",
+            "5\n",
+            "6\n",
+            "7\n",
+            "8\n",
+            "9\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "KaxraE3kzAIT"
+      },
+      "source": [
+        "Looks like at n=3 we get below the error threshhold.  Let's do the approximation now.  Don't forget to put the ocilations back in!"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4s9kL7T0y7Io",
+        "outputId": "073d901b-d8e1-47ed-a2c7-27787155ceed"
+      },
+      "source": [
+        "sum = 0\n",
+        "for i in range(3):\n",
+        "  sum = sum + (-1)**i*term(.4,i)\n",
+        "\n",
+        "print(sum)"
+      ],
+      "execution_count": 43,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "0.3937170285714286\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "PzyePelG0koO"
+      },
+      "source": [
+        "Also you might ask what happened to the lower limit but if you plug in zero to the series you'll see it is zero."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "ewgTiuIizT4v"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
