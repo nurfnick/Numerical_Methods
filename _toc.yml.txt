@@ -1,0 +1,3 @@
+# In _toc.yml
+- file: WeBWorK1HomeworkHelper
+- file: WeBWorK2HomeworkHelper
