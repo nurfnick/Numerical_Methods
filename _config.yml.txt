@@ -1,4 +1,0 @@
-# in _config.yml
-title: "Materials For Numerical Methods"
-execute:
-  execute_notebooks: "off"
